@@ -7,29 +7,31 @@
 //
 
 import XCTest
+@testable import MovieApp
 
 class RatingTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testInBounds() {
+        let rating = try? MovieRating(value: 5.0)
+        XCTAssertNotNil(rating)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testOutOfBounds() {
+        XCTAssertThrowsError(try MovieRating(value: -0.1))
+        XCTAssertThrowsError(try MovieRating(value: 10.1))
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testEquivalenceValues() {
+        XCTAssertNotNil(try? MovieRating(value: 0.0))
+        XCTAssertNotNil(try? MovieRating(value: 10.0))
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testStringFormat() {
+        let rating = try? MovieRating(value: 5.0)
+        XCTAssertNotNil(rating)
+        
+        if let strVal = rating?.stringValue {
+            XCTAssertEqual(strVal, "5.0")
         }
     }
-    
 }

@@ -7,29 +7,33 @@
 //
 
 import XCTest
+@testable import MovieApp
 
 class RuntimeTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testZeroMinutes() {
+        let rt = RunTime(minutes: 0)
+        XCTAssertEqual(rt.formatted, "0m")
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testUnderHour() {
+        let rt = RunTime(minutes: 45)
+        XCTAssertEqual(rt.formatted, "45m")
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testMultipleEvenHours() {
+        let rt = RunTime(minutes: 180)
+        XCTAssertEqual(rt.formatted, "3h")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testExactlyOneHour() {
+        let rt = RunTime(minutes: 60)
+        XCTAssertEqual(rt.formatted, "1h")
+    }
+    
+    func testMixedTime() {
+        let rt = RunTime(minutes: 90)
+        XCTAssertEqual(rt.formatted, "1h30m")
     }
     
 }

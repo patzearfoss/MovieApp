@@ -7,29 +7,37 @@
 //
 
 import XCTest
+@testable import MovieApp
 
 class MovieDetailViewModelTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testEmptyViewModel() {
+        var testMovie = Movie(id: 123)
+        testMovie.title = "Movie Title"
+        testMovie.description = "Test description"
+        testMovie.rating = try! MovieRating(value: 7.5)
+        testMovie.releaseYear = 1990
+        testMovie.runtime = RunTime(minutes: 90)
+        
+        let viewModel = MovieDetailViewModel(movie: testMovie)
+        
+        XCTAssertEqual(viewModel.title, "Movie Title")
+        XCTAssertEqual(viewModel.overview, "Test description")
+        XCTAssertEqual(viewModel.rating, "Rating: 7.5")
+        XCTAssertEqual(viewModel.releaseYear, "Release Year: 1990")
+        XCTAssertEqual(viewModel.runtime, "Runtime: 1h30m")
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testFullViewModel() {
+        let testMovie = Movie(id: 123)
+        
+        let viewModel = MovieDetailViewModel(movie: testMovie)
+        
+        XCTAssertEqual(viewModel.title, "")
+        XCTAssertEqual(viewModel.overview, "(overview not available)")
+        XCTAssertEqual(viewModel.rating, "Rating: n/a")
+        XCTAssertEqual(viewModel.releaseYear, "Release Year: n/a")
+        XCTAssertEqual(viewModel.runtime, "Runtime: n/a")
+
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
